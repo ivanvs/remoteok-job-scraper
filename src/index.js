@@ -1,22 +1,27 @@
-const Apify = require('apify');
-const { scrape } = require('./crawler');
+import { Actor } from 'apify';
+import { scrape } from './crawler.js';
+import { log } from 'crawlee';
+
+// Initialize the Apify SDK
+await Actor.init();
 
 const {
-  utils: { log },
-} = Apify;
+  tag = '',
+  maxNumberOfListings = 50,
+  proxyConfiguration,
+  debugLog = false,
+  maxConcurrency = 1,
+} = await Actor.getInput();
 
-Apify.main(async () => {
-  const input = await Apify.getInput();
-  const { tag = '', maxNumberOfListings = 50, proxyConfiguration, debugLog = false, maxConcurrency = 1 } = input;
+if (debugLog) {
+  log.setLevel(log.LEVELS.DEBUG);
+}
 
-  if (debugLog) {
-    log.setLevel(log.LEVELS.DEBUG);
-  }
+let proxy = null;
+if (proxyConfiguration) {
+  proxy = await Actor.createProxyConfiguration(proxyConfiguration);
+}
 
-  let proxy = null;
-  if (proxyConfiguration) {
-    proxy = await Apify.createProxyConfiguration(proxyConfiguration);
-  }
+await scrape({ tag, maxNumberOfListings, maxConcurrency, proxy });
 
-  await scrape({ tag, maxNumberOfListings, maxConcurrency, proxy });
-});
+await Actor.exit();
