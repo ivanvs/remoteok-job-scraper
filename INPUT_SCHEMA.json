@@ -23,10 +23,10 @@
       "type": "object",
       "description": "Use Apify Proxy or your custom Proxy.",
       "prefill": {
-        "useApifyProxy": true
+        "useApifyProxy": false
       },
       "default": {
-        "useApifyProxy": true
+        "useApifyProxy": false
       },
       "editor": "proxy",
       "sectionCaption": "For developers"
@@ -46,5 +46,5 @@
       "default": false
     }
   },
-  "required": ["proxyConfiguration"]
+  "required": []
 }
