@@ -1,0 +1,8 @@
+build/
+dist/
+node_modules/
+package-lock.json
+yarn.lock
+.nyc_output/
+files/
+README.md

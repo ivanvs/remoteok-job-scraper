@@ -1,0 +1,27 @@
+{
+  "name": "remoteok-job-scraper",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "RemoteOK job scraper",
+  "dependencies": {
+    "apify": "3.0.2",
+    "crawlee": "^3.0.0"
+  },
+  "devDependencies": {
+    "eslint": "8.17.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "prettier": "2.7.1"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "start-dev": "node src/main.js",
+    "lint": "eslint --fix .",
+    "lint-check": "eslint .",
+    "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
+  },
+  "author": "ivan.vasiljevic@hotmail.com",
+  "license": "ISC"
+}

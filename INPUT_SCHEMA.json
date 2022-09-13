@@ -1,0 +1,50 @@
+{
+  "title": "RemoteOK Scraper input",
+  "description": "Scraper that can scrape job listing from RemoteOK site",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "tag": {
+      "title": "Tag",
+      "type": "string",
+      "description": "Tag for which we scraper will search job listings on RemoteOK site (java, node, etc.)",
+      "prefill": "",
+      "editor": "textfield"
+    },
+    "maxNumberOfListings": {
+      "title": "Number of results",
+      "type": "integer",
+      "description": "Limit the amount of results you want. Higher limits will take longer to scrape.",
+      "prefill": 50,
+      "example": 10
+    },
+    "proxyConfiguration": {
+      "title": "Proxy configuration",
+      "type": "object",
+      "description": "Use Apify Proxy or your custom Proxy.",
+      "prefill": {
+        "useApifyProxy": true
+      },
+      "default": {
+        "useApifyProxy": true
+      },
+      "editor": "proxy",
+      "sectionCaption": "For developers"
+    },
+    "maxConcurrency": {
+      "title": "Max concurrency",
+      "type": "integer",
+      "description": "Defines how many pages can be processed by the scraper in parallel. The scraper automatically increases and decreases concurrency based on available system resources. Use this option to set a hard limit.",
+      "minimum": 1,
+      "default": 1,
+      "prefill": 1
+    },
+    "debugLog": {
+      "title": "Debug Log",
+      "type": "boolean",
+      "description": "Shows additional debugging information.",
+      "default": false
+    }
+  },
+  "required": ["proxyConfiguration"]
+}
