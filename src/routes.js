@@ -1,6 +1,6 @@
 import { Dataset, createCheerioRouter } from 'crawlee';
 
-const getAtt = (el, attName) => el.attributes.find(x => x.name === attName).value;
+const getAtt = (el, attName) => el.attributes.find(x => x.name === attName)?.value;
 const getAttInt = (el, attName) => parseInt(getAtt(el, attName));
 
 export const createRouter = ({ maxNumberOfListings = 50 }) => {
@@ -58,12 +58,14 @@ export const createRouter = ({ maxNumberOfListings = 50 }) => {
     const tags = [];
     let time = '';
     $('h2', el).map((_, h2) => {
-      title = h2.firstChild.data.trim();
+      title = h2.firstChild?.data?.trim();
     });
 
     $('.tag h3', el).map((_, ele) => {
-      const tag = ele.firstChild.data.trim();
-      tags.push(tag);
+      const tag = ele?.firstChild?.data?.trim();
+      if (tag) {
+        tags.push(tag);
+      }
     });
 
     $('.time time', el).map((_, timeEl) => {
@@ -74,11 +76,11 @@ export const createRouter = ({ maxNumberOfListings = 50 }) => {
     const locations = [];
 
     for (let i = 0; i < locationsEl.length - 1; i++) {
-      const location = locationsEl[i].firstChild.data.trim();
+      const location = locationsEl[i]?.firstChild?.data?.trim();
       locations.push(location);
     }
 
-    const money = locationsEl[locationsEl.length - 1].firstChild.data.trim();
+    const money = locationsEl[locationsEl.length - 1]?.firstChild?.data?.trim();
     const moneyText = money.replace('💰 ', '').replace('*', '').split(' - ');
     let minSalary = '';
     let maxSalary = '';
