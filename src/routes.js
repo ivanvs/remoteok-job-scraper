@@ -81,14 +81,17 @@ export const createRouter = ({ maxNumberOfListings = 50 }) => {
     }
 
     const money = locationsEl[locationsEl.length - 1]?.firstChild?.data?.trim();
-    const moneyText = money.replace('💰 ', '').replace('*', '').split(' - ');
     let minSalary = '';
     let maxSalary = '';
-    if (moneyText.length === 2) {
-      minSalary = moneyText[0];
-      maxSalary = moneyText[1];
-    } else if (moneyText.length === 1) {
-      minSalary = moneyText[0];
+    if (money) {
+      const moneyText = money.replace('💰 ', '').replace('*', '').split(' - ');
+
+      if (moneyText.length === 2) {
+        minSalary = moneyText[0];
+        maxSalary = moneyText[1];
+      } else if (moneyText.length === 1) {
+        minSalary = moneyText[0];
+      }
     }
 
     return {
