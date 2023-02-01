@@ -23,5 +23,5 @@
     "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
   },
   "author": "ivan.vasiljevic@hotmail.com",
-  "license": "ISC"
+  "license": "MIT"
 }
