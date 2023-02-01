@@ -1,7 +1,7 @@
 {
   "name": "remoteok-job-scraper",
-  "version": "0.1",
-  "buildTag": "latest",
+  "version": "0.2",
+  "buildTag": "0.2",
   "env": {},
   "template": "cheerio_crawler"
 }
