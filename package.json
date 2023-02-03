@@ -23,5 +23,13 @@
     "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
   },
   "author": "ivan.vasiljevic@hotmail.com",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ivanvs/remoteok-job-scraper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ivanvs/remoteok-job-scraper/issues"
+  },
+  "homepage": "https://github.com/ivanvs/remoteok-job-scraper#readme"
 }
