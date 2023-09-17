@@ -1,19 +1,19 @@
 {
   "name": "remoteok-job-scraper",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "type": "module",
   "description": "RemoteOK job scraper",
   "dependencies": {
-    "apify": "3.0.2",
-    "crawlee": "^3.0.0"
+    "apify": "3.1.10",
+    "crawlee": "3.5.4"
   },
   "devDependencies": {
-    "eslint": "8.17.0",
+    "eslint": "8.49.0",
     "eslint-config-airbnb-base": "15.0.0",
-    "eslint-config-prettier": "8.5.0",
-    "eslint-plugin-import": "2.26.0",
-    "eslint-plugin-prettier": "4.2.1",
-    "prettier": "2.7.1"
+    "eslint-config-prettier": "9.0.0",
+    "eslint-plugin-import": "2.28.1",
+    "eslint-plugin-prettier": "5.0.0",
+    "prettier": "3.0.3"
   },
   "scripts": {
     "start": "node src/index.js",

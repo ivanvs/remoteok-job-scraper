@@ -10,7 +10,7 @@ export const scrape = async ({ tag = '', maxNumberOfListings = 50, maxConcurrenc
   const crawler = new CheerioCrawler({
     proxyConfiguration: proxy,
     requestHandler: router,
-    maxConcurrency: maxConcurrency,
+    maxConcurrency,
   });
 
   await crawler.run(startUrls);

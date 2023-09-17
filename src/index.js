@@ -1,6 +1,6 @@
 import { Actor } from 'apify';
-import { scrape } from './crawler.js';
 import { log } from 'crawlee';
+import { scrape } from './crawler.js';
 
 // Initialize the Apify SDK
 await Actor.init();

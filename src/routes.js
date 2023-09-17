@@ -1,11 +1,69 @@
 import { Dataset, createCheerioRouter } from 'crawlee';
 
 const getAtt = (el, attName) => el.attributes.find(x => x.name === attName)?.value;
-const getAttInt = (el, attName) => parseInt(getAtt(el, attName));
+const getAttInt = (el, attName) => parseInt(getAtt(el, attName), 10);
 
 export const createRouter = ({ maxNumberOfListings = 50 }) => {
   const router = createCheerioRouter();
   const maxOffset = maxNumberOfListings;
+
+  const getJobData = (el, $) => {
+    const id = getAtt(el, 'data-id');
+    const company = getAtt(el, 'data-company');
+    const url = getAtt(el, 'data-url');
+    const offset = getAtt(el, 'data-offset');
+    let title = '';
+    const tags = [];
+    let time = '';
+    $('h2', el).each((_, h2) => {
+      title = h2.firstChild?.data?.trim();
+    });
+
+    $('.tag h3', el).each((_, ele) => {
+      const tag = ele?.firstChild?.data?.trim();
+      if (tag) {
+        tags.push(tag);
+      }
+    });
+
+    $('.time time', el).each((_, timeEl) => {
+      time = getAtt(timeEl, 'datetime');
+    });
+
+    const locationsEl = $('.location', el).get();
+    const locations = [];
+
+    for (let i = 0; i < locationsEl.length - 1; i += 1) {
+      const location = locationsEl[i]?.firstChild?.data?.trim();
+      locations.push(location);
+    }
+
+    const money = locationsEl[locationsEl.length - 1]?.firstChild?.data?.trim();
+    let minSalary = '';
+    let maxSalary = '';
+    if (money) {
+      const moneyText = money.replace('💰 ', '').replace('*', '').split(' - ');
+
+      if (moneyText.length === 2) {
+        [minSalary, maxSalary] = moneyText;
+      } else if (moneyText.length === 1) {
+        [minSalary] = moneyText;
+      }
+    }
+
+    return {
+      id,
+      company,
+      url: `https://remoteok.com${url}`,
+      title,
+      tags,
+      time,
+      locations,
+      minSalary,
+      maxSalary,
+      offset,
+    };
+  };
 
   router.addDefaultHandler(async ({ request, log, $, crawler }) => {
     log.info(`Processing page ${request.url}`);
@@ -29,9 +87,8 @@ export const createRouter = ({ maxNumberOfListings = 50 }) => {
           return;
         }
 
-        $('.markdown', el).map((_, descEl) => {
-          job.description = descEl.firstChild.data.trim();
-        });
+        job.description = $('div.html', el)?.first()?.text()?.trim();
+        job.descriptionHtml = $('div.html', el)?.first()?.html()?.trim();
       }
     });
 
@@ -48,65 +105,6 @@ export const createRouter = ({ maxNumberOfListings = 50 }) => {
       await crawler.addRequests(requests);
     }
   });
-
-  const getJobData = (el, $) => {
-    const id = getAtt(el, 'data-id');
-    const company = getAtt(el, 'data-company');
-    const url = getAtt(el, 'data-url');
-    const offset = getAtt(el, 'data-offset');
-    let title = '';
-    const tags = [];
-    let time = '';
-    $('h2', el).map((_, h2) => {
-      title = h2.firstChild?.data?.trim();
-    });
-
-    $('.tag h3', el).map((_, ele) => {
-      const tag = ele?.firstChild?.data?.trim();
-      if (tag) {
-        tags.push(tag);
-      }
-    });
-
-    $('.time time', el).map((_, timeEl) => {
-      time = getAtt(timeEl, 'datetime');
-    });
-
-    const locationsEl = $('.location', el).get();
-    const locations = [];
-
-    for (let i = 0; i < locationsEl.length - 1; i++) {
-      const location = locationsEl[i]?.firstChild?.data?.trim();
-      locations.push(location);
-    }
-
-    const money = locationsEl[locationsEl.length - 1]?.firstChild?.data?.trim();
-    let minSalary = '';
-    let maxSalary = '';
-    if (money) {
-      const moneyText = money.replace('💰 ', '').replace('*', '').split(' - ');
-
-      if (moneyText.length === 2) {
-        minSalary = moneyText[0];
-        maxSalary = moneyText[1];
-      } else if (moneyText.length === 1) {
-        minSalary = moneyText[0];
-      }
-    }
-
-    return {
-      id,
-      company,
-      url: `https://remoteok.com${url}`,
-      title,
-      tags,
-      time,
-      locations,
-      minSalary,
-      maxSalary,
-      offset,
-    };
-  };
 
   return router;
 };
