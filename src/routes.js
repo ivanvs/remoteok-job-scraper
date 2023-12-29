@@ -89,6 +89,11 @@ export const createRouter = ({ maxNumberOfListings = 50 }) => {
 
         job.description = $('div.html', el)?.first()?.text()?.trim();
         job.descriptionHtml = $('div.html', el)?.first()?.html()?.trim();
+
+        if (!job.description) {
+          job.description = $('div.description div.markdown', el)?.text()?.trim();
+          job.descriptionHtml = $('div.description', el)?.html()?.trim();
+        }
       }
     });
 
