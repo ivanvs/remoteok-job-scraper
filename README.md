@@ -46,10 +46,6 @@ The output from RemoteOK Job Scraper is stored in the dataset. After the run is 
 
 Running RemoteOK Job Scraper once will get you 1,000 results for less than USD 1 in Apify platform credits. For more details about the plans offer, platform credits, and usage, see the platform pricing [page](https://apify.com/pricing/actors).
 
-## Planning board
-
-[Trello Planning Board](https://trello.com/b/NTXxvWtD/remoteok-job-scraper)
-
 ## Support
 
 For more custom/simplify outputs or Bug report please contact the developer (me) or report an issue.

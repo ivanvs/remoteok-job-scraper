@@ -1,0 +1,53 @@
+{
+  "actorSpecification": 1,
+  "name": "remoteok-job-scraper",
+  "title": "RemoteOK Job scraper",
+  "version": "1.0.0",
+  "storages": {
+    "dataset": {
+      "actorSpecification": 1,
+      "fields": {},
+      "views": {
+        "overview": {
+          "title": "Overview",
+          "transformation": {
+            "fields": ["id", "company", "title", "locations", "minSalary", "maxSalary", "url"]
+          },
+          "display": {
+            "component": "table",
+            "properties": {
+              "id": {
+                "label": "ID",
+                "format": "text"
+              },
+              "company": {
+                "label": "Company",
+                "format": "text"
+              },
+              "title": {
+                "label": "Title",
+                "format": "text"
+              },
+              "locations": {
+                "label": "Locations",
+                "format": "array"
+              },
+              "minSalary": {
+                "label": "Min Salary",
+                "format": "text"
+              },
+              "maxSalary": {
+                "label": "Max Salary",
+                "format": "text"
+              },
+              "url": {
+                "label": "Ad URL",
+                "format": "link"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
