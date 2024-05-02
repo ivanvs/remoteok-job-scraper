@@ -4,8 +4,8 @@
   "type": "module",
   "description": "RemoteOK job scraper",
   "dependencies": {
-    "apify": "3.1.16",
-    "crawlee": "3.8.1"
+    "apify": "3.2.0",
+    "crawlee": "3.9.2"
   },
   "devDependencies": {
     "eslint": "8.49.0",

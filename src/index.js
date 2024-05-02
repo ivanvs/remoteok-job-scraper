@@ -7,7 +7,7 @@ await Actor.init();
 
 const {
   tag = '',
-  maxNumberOfListings = 50,
+  maxNumberOfListings = 100,
   proxyConfiguration,
   debugLog = false,
   maxConcurrency = 1,

@@ -15,7 +15,7 @@
       "title": "Number of results",
       "type": "integer",
       "description": "Limit the amount of results you want. Higher limits will take longer to scrape.",
-      "prefill": 50,
+      "prefill": 100,
       "example": 10
     },
     "proxyConfiguration": {

@@ -3,9 +3,8 @@ import { Dataset, createCheerioRouter } from 'crawlee';
 const getAtt = (el, attName) => el.attributes.find(x => x.name === attName)?.value;
 const getAttInt = (el, attName) => parseInt(getAtt(el, attName), 10);
 
-export const createRouter = ({ maxNumberOfListings = 50 }) => {
+export const createRouter = ({ maxOffset }) => {
   const router = createCheerioRouter();
-  const maxOffset = maxNumberOfListings;
 
   const getJobData = (el, $) => {
     const id = getAtt(el, 'data-id');
