@@ -11,6 +11,13 @@
       "prefill": "",
       "editor": "textfield"
     },
+    "searchUrls": {
+      "title": "List of search URLs",
+      "type": "array",
+      "description": "List of URLs on remoteOk.com that needs to be scraped",
+      "prefill": [],
+      "editor": "requestListSources"
+    },
     "maxNumberOfListings": {
       "title": "Number of results",
       "type": "integer",

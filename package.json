@@ -5,7 +5,8 @@
   "description": "RemoteOK job scraper",
   "dependencies": {
     "apify": "3.2.0",
-    "crawlee": "3.9.2"
+    "crawlee": "3.9.2",
+    "csvtojson": "2.0.10"
   },
   "devDependencies": {
     "eslint": "8.49.0",

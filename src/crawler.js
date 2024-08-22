@@ -1,11 +1,7 @@
 import { CheerioCrawler } from 'crawlee';
 import { createRouter } from './routes.js';
 
-export const scrape = async ({ tag = '', maxNumberOfListings, maxConcurrency = 1, proxy }) => {
-  const startUrls = tag
-    ? [`https://remoteok.com/?tags=${tag}&action=get_jobs&offset=0`]
-    : [`https://remoteok.com/?&action=get_jobs&offset=0`];
-
+export const scrape = async ({ urls, maxNumberOfListings, maxConcurrency = 1, proxy }) => {
   const router = createRouter({ maxOffset: maxNumberOfListings });
   const crawler = new CheerioCrawler({
     proxyConfiguration: proxy,
@@ -13,5 +9,5 @@ export const scrape = async ({ tag = '', maxNumberOfListings, maxConcurrency = 1
     maxConcurrency,
   });
 
-  await crawler.run(startUrls);
+  await crawler.run(urls);
 };
