@@ -6,7 +6,10 @@
   "dependencies": {
     "apify": "3.2.0",
     "crawlee": "3.9.2",
-    "csvtojson": "2.0.10"
+    "csvtojson": "2.0.10",
+    "playwright": "*",
+    "playwright-extra": "4.3.6",
+    "puppeteer-extra-plugin-stealth": "2.11.2"
   },
   "devDependencies": {
     "eslint": "8.49.0",

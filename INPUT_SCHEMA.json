@@ -25,18 +25,6 @@
       "prefill": 100,
       "example": 10
     },
-    "proxyConfiguration": {
-      "title": "Proxy configuration",
-      "type": "object",
-      "description": "Use Apify Proxy or your custom Proxy.",
-      "prefill": {
-        "useApifyProxy": true
-      },
-      "default": {
-        "useApifyProxy": true
-      },
-      "editor": "proxy"
-    },
     "maxConcurrency": {
       "title": "Max concurrency",
       "type": "integer",

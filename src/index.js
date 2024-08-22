@@ -9,7 +9,6 @@ await Actor.init();
 const {
   tag = '',
   maxNumberOfListings = 100,
-  proxyConfiguration,
   debugLog = false,
   maxConcurrency = 1,
   searchUrls = [],
@@ -19,10 +18,10 @@ if (debugLog) {
   log.setLevel(log.LEVELS.DEBUG);
 }
 
-let proxy = null;
-if (proxyConfiguration) {
-  proxy = await Actor.createProxyConfiguration(proxyConfiguration);
-}
+const proxy = await Actor.createProxyConfiguration({
+  useApifyProxy: true,
+  apifyProxyGroups: ['RESIDENTIAL'],
+});
 const urls = [];
 
 if (tag) {

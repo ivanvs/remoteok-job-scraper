@@ -1,10 +1,10 @@
-import { Dataset, createCheerioRouter } from 'crawlee';
+import { Dataset, createPlaywrightRouter } from 'crawlee';
 
 const getAtt = (el, attName) => el.attributes.find(x => x.name === attName)?.value;
 const getAttInt = (el, attName) => parseInt(getAtt(el, attName), 10);
 
 export const createRouter = ({ maxOffset }) => {
-  const router = createCheerioRouter();
+  const router = createPlaywrightRouter();
 
   const getJobData = (el, $) => {
     const id = getAtt(el, 'data-id');
@@ -64,8 +64,11 @@ export const createRouter = ({ maxOffset }) => {
     };
   };
 
-  router.addDefaultHandler(async ({ request, log, $, crawler }) => {
+  router.addDefaultHandler(async ({ request, log, page, parseWithCheerio, crawler }) => {
     log.info(`Processing page ${request.url}`);
+
+    await page.waitForTimeout(60_000);
+    const $ = await parseWithCheerio();
 
     let currentOffset = 0;
     const jobs = [];
