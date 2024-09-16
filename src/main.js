@@ -1,11 +1,6 @@
-import { prepareSearchUrl } from './urls.js';
-
 import { scrape } from './crawler.js';
 
-const startUrls = [
-  'https://remoteok.com/?=&action=get_jobs&offset=0',
-  prepareSearchUrl('https://remoteok.com/remote-engineer+exec-jobs?order_by=salary'),
-];
+const startUrls = ['https://remoteok.com/remote-javascript-jobs'];
 
 await scrape({
   maxConcurrency: 1,

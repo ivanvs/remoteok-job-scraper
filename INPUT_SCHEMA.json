@@ -4,13 +4,6 @@
   "type": "object",
   "schemaVersion": 1,
   "properties": {
-    "tag": {
-      "title": "Tag",
-      "type": "string",
-      "description": "Tag for which we scraper will search job listings on RemoteOK site (java, node, etc.)",
-      "prefill": "",
-      "editor": "textfield"
-    },
     "searchUrls": {
       "title": "List of search URLs",
       "type": "array",
@@ -40,5 +33,5 @@
       "default": false
     }
   },
-  "required": []
+  "required": ["searchUrls"]
 }

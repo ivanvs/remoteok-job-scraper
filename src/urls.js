@@ -1,35 +1,7 @@
 import { gotScraping } from 'crawlee';
 import csvtojson from 'csvtojson';
 
-export const prepareSearchUrl = url => {
-  if (url.startsWith('https://remoteok.com/')) {
-    const parsedUrl = new URL(url);
-
-    let tagsQuery = '';
-
-    if (parsedUrl.pathname.startsWith('/remote-') && parsedUrl.pathname.endsWith('-jobs')) {
-      const tagsString = `${parsedUrl.pathname}`.replace('/remote-', '')?.replace('-jobs', '');
-      const tags = tagsString?.split('+');
-
-      if (tags.length > 0) {
-        tagsQuery = tags
-          .filter(x => !!x)
-          .map(x => encodeURIComponent(x))
-          .join();
-      }
-    }
-
-    const query = `${parsedUrl.search}`.replace('?', '');
-
-    if (tagsQuery) {
-      return `https://remoteok.com/?tags=${tagsQuery}&action=get_jobs&offset=0&${query}`;
-    }
-
-    return `https://remoteok.com/?action=get_jobs&offset=0&${query}`;
-  }
-
-  return null;
-};
+export const isRemoteOkUrl = url => url.startsWith('https://remoteok.com/');
 
 export const getStartRequestsFromUrl = async startUrl => {
   let sourceUrl = startUrl.requestsFromUrl;

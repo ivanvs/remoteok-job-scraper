@@ -67,7 +67,7 @@ export const createRouter = ({ maxOffset }) => {
   router.addDefaultHandler(async ({ request, log, page, parseWithCheerio, crawler }) => {
     log.info(`Processing page ${request.url}`);
 
-    await page.waitForTimeout(60_000);
+    await page.waitForTimeout(15_000);
     const $ = await parseWithCheerio();
 
     let currentOffset = 0;

@@ -12,11 +12,13 @@ export const scrape = async ({ urls, maxNumberOfListings, maxConcurrency = 1, pr
       launcher: chromium,
       // Here you can set options that are passed to the playwright .launch() function.
       launchOptions: {
-        headless: true,
+        headless: false,
       },
     },
     proxyConfiguration: proxy,
     requestHandler: router,
+    requestHandlerTimeoutSecs: 300,
+    maxRequestRetries: 3,
     maxConcurrency,
     useSessionPool: true,
     persistCookiesPerSession: true,
