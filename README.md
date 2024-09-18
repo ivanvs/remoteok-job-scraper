@@ -4,9 +4,7 @@ Scrape data from [RemoteOK](https://remoteok.com/) easily with RemoteOK Job Scra
 
 ## How to use
 
-In order to use RemoteOK Job Scraper you don't really need to provide any input. In that case you will get 50 results without any filtering.
-
-In order to scrape jobs by tag and to get more results you can provide input values for `tag` and `maxNumberOfListings`.
+In order to use RemoteOK Job Scraper you need to go to web site and do approriate search you want to scrape. When you are satisfied with search copy URL from browser and put it in `searchUrls` field. With that set you can start scraping your search with the actor.
 
 ### Example
 
@@ -14,7 +12,11 @@ If we want to scrape jobs for `java` and to get 500 results input would look lik
 
 ```json
 {
-  "tag": "java",
+  "searchUrls": [
+        {
+            "url": "https://remoteok.com/remote-java-jobs?order_by=date"
+        }
+    ]
   "maxNumberOfListings": 500
 }
 ```

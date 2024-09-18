@@ -8,7 +8,7 @@
       "title": "List of search URLs",
       "type": "array",
       "description": "List of URLs on remoteOk.com that needs to be scraped",
-      "prefill": [],
+      "prefill": ["https://remoteok.com/remote-java-jobs"],
       "editor": "requestListSources"
     },
     "maxNumberOfListings": {

@@ -20,11 +20,13 @@ const urls = [];
 
 const allUrls = await buildStartRequests(searchUrls);
 
-allUrls.filter(isRemoteOkUrl).forEach(url => {
-  if (url) {
-    urls.push(url);
-  }
-});
+allUrls
+  .filter(url => isRemoteOkUrl(url.url))
+  .forEach(url => {
+    if (url && url.url) {
+      urls.push(url.url);
+    }
+  });
 
 await scrape({ urls, maxNumberOfListings, maxConcurrency, proxy });
 
