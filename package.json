@@ -4,8 +4,8 @@
   "type": "module",
   "description": "RemoteOK job scraper",
   "dependencies": {
-    "apify": "3.2.0",
-    "crawlee": "3.9.2",
+    "apify": "3.2.4",
+    "crawlee": "3.11.1",
     "csvtojson": "2.0.10",
     "playwright": "*",
     "playwright-extra": "4.3.6",
