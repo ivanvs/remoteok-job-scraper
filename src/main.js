@@ -1,10 +1,10 @@
 import { scrape } from './crawler.js';
 
-const startUrls = ['https://remoteok.com/remote-javascript-jobs'];
+const startUrls = ['https://remoteok.com/'];
 
 await scrape({
   maxConcurrency: 1,
   proxy: undefined,
   urls: startUrls,
-  maxNumberOfResults: 100,
+  maxNumberOfListings: 100,
 });

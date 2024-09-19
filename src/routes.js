@@ -1,16 +1,14 @@
 import { Dataset, createPlaywrightRouter } from 'crawlee';
 
 const getAtt = (el, attName) => el.attributes.find(x => x.name === attName)?.value;
-const getAttInt = (el, attName) => parseInt(getAtt(el, attName), 10);
 
 export const createRouter = ({ maxOffset }) => {
   const router = createPlaywrightRouter();
 
   const getJobData = (el, $) => {
-    const id = getAtt(el, 'data-id');
-    const company = getAtt(el, 'data-company');
-    const url = getAtt(el, 'data-url');
-    const offset = getAtt(el, 'data-offset');
+    const id = $(el).attr('data-id');
+    const company = $(el).attr('data-company');
+    const url = $(el).attr('data-url');
     let title = '';
     const tags = [];
     let time = '';
@@ -31,22 +29,24 @@ export const createRouter = ({ maxOffset }) => {
 
     const locationsEl = $('.location', el).get();
     const locations = [];
-
-    for (let i = 0; i < locationsEl.length - 1; i += 1) {
-      const location = locationsEl[i]?.firstChild?.data?.trim();
-      locations.push(location);
-    }
-
-    const money = locationsEl[locationsEl.length - 1]?.firstChild?.data?.trim();
     let minSalary = '';
     let maxSalary = '';
-    if (money) {
-      const moneyText = money.replace('💰 ', '').replace('*', '').split(' - ');
+    let contractType = '';
 
-      if (moneyText.length === 2) {
-        [minSalary, maxSalary] = moneyText;
-      } else if (moneyText.length === 1) {
-        [minSalary] = moneyText;
+    for (let i = 0; i < locationsEl.length; i += 1) {
+      const location = locationsEl[i]?.firstChild?.data?.trim();
+
+      if (location.includes('💰')) {
+        const moneyText = location.replace('💰 ', '').replace('*', '').split(' - ');
+        if (moneyText.length === 2) {
+          [minSalary, maxSalary] = moneyText;
+        } else if (moneyText.length === 1) {
+          [minSalary] = moneyText;
+        }
+      } else if (location.includes('⏰')) {
+        contractType = location.replace('⏰', '').trim();
+      } else {
+        locations.push(location);
       }
     }
 
@@ -60,7 +60,7 @@ export const createRouter = ({ maxOffset }) => {
       locations,
       minSalary,
       maxSalary,
-      offset,
+      contractType,
     };
   };
 
@@ -70,37 +70,36 @@ export const createRouter = ({ maxOffset }) => {
     await page.waitForTimeout(15_000);
     const $ = await parseWithCheerio();
 
+    let pageOffset = parseInt(new URL(request.url).searchParams.get('offset'), 10) || 0;
+
+    if (pageOffset > 0) {
+      pageOffset -= 1;
+    }
+
     let currentOffset = 0;
     const jobs = [];
-    await $('tr').map(async (_, el) => {
-      if (el.attributes.find(x => x.name === 'class' && x.value.includes('job'))) {
-        currentOffset = getAttInt(el, 'data-offset');
-        if (currentOffset > maxOffset) {
-          // we got number of jobs that we wanted
-          return;
-        }
-        jobs.push(getJobData(el, $));
-      } else if (el.attributes.find(x => x.name === 'class' && x.value.includes('expand'))) {
-        const jobId = getAtt(el, 'data-id');
-        const job = jobs.find(x => x.id === jobId);
+    await $('tr.job').map(async (_, el) => {
+      currentOffset = pageOffset + parseInt($(el).attr('data-offset'), 10);
+      const job = getJobData(el, $);
+      job.offset = currentOffset;
 
-        if (!job) {
-          log.debug(`Job ${jobId} cannot be found, current offset: ${currentOffset}`);
-          return;
-        }
-
-        job.description = $('div.html', el)?.first()?.text()?.trim();
-        job.descriptionHtml = $('div.html', el)?.first()?.html()?.trim();
-
-        if (!job.description) {
-          job.description = $('div.description div.markdown', el)?.text()?.trim();
-          job.descriptionHtml = $('div.description', el)?.html()?.trim();
-        }
+      if (currentOffset > maxOffset) {
+        // we got number of jobs that we wanted
+        return;
       }
+
+      const description = $(`tr.expand-${job.id} div.html`).text().trim();
+      if (description) {
+        job.description = description;
+      } else {
+        job.description = $(`tr.expand-${job.id} div.markdown`).text().trim();
+      }
+
+      jobs.push(job);
     });
 
     const url = new URL(request.url);
-    url.searchParams.set('offset', currentOffset);
+    url.searchParams.set('offset', currentOffset + 1);
 
     await Dataset.pushData(jobs);
 
